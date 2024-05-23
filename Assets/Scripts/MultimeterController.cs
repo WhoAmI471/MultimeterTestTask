@@ -1,38 +1,69 @@
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Outline))]
 public class MultimeterController : MonoBehaviour
 {
-    public MultimeterModel model;
-    public MultimeterView view;
-
-    private Transform mid;
-    private Outline outline;
-
+    [SerializeField]
+    private MultimeterModel MultimeterModel;
+    [SerializeField]
+    private MultimeterView MultimeterView;
     [SerializeField]
     private float scrollAngleStep = 72f;
+    [SerializeField]
+    private float power = 400f;
+    [SerializeField]
+    private float resistance = 1000f;
 
+    private Outline outline;
     private bool isMouseOver = false;
+
+    public static event Action ActionTriggerActive;
     
     private void Start()
     {
-        mid = GetComponent<Transform>();
         outline = GetComponent<Outline>();
 
         outline.enabled = false;
 
-        model.SetValues(400f, 1000f);
+        MultimeterModel.SetValues(power, resistance);
     }
 
     private void OnMouseEnter()
     {
         outline.enabled = true;
         isMouseOver = true;
+
+        ActionTriggerActive += UpdateDisplayValues;
     }
 
     private void OnMouseExit()
     {
         outline.enabled = false;
         isMouseOver = false;
+        ActionTriggerActive -= UpdateDisplayValues;
+    }
+
+    private void UpdateDisplayValues()
+    {
+        switch (MultimeterModel.CurrentMode)
+        {
+            case MultimeterMode.Voltage:
+                MultimeterView.UpdateValues(MultimeterModel.CalculateVoltage());
+                break;
+            case MultimeterMode.ACVoltage:
+                MultimeterView.UpdateValues(0.01f);
+                break;
+            case MultimeterMode.Amperage:
+                MultimeterView.UpdateValues(MultimeterModel.CalculateAmperage());
+                break;
+            case MultimeterMode.Resistance:
+                MultimeterView.UpdateValues(MultimeterModel.Resistance);
+                break;
+            default:
+                MultimeterView.TurnOffDisplay();
+                break;
+        }
     }
 
     private void LateUpdate()
@@ -41,44 +72,28 @@ public class MultimeterController : MonoBehaviour
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-                if (model.CurrentMode == MultimeterMode.Resistance)
-                    model.SetMode();
+                if (MultimeterModel.CurrentMode == MultimeterMode.Resistance)
+                    MultimeterModel.SetMode();
                 else
-                    model.SwitchModeNext();
+                    MultimeterModel.SwitchModeNext();
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                if (model.CurrentMode > MultimeterMode.Off)
-                    model.SwitchModeBack();
+                if (MultimeterModel.CurrentMode > MultimeterMode.Off)
+                    MultimeterModel.SwitchModeBack();
                 else
-                    model.SetMode(4);
+                    MultimeterModel.SetMode(4);
             }
             
-            view.UpdateMode(model.CurrentMode);
+            ActionTriggerActive?.Invoke();
+            MultimeterView.UpdateMode(MultimeterModel.CurrentMode);
         }
 
-        switch (model.CurrentMode)
-        {
-            case MultimeterMode.Voltage:
-                view.UpdateValues(model.CalculateVoltage());
-                break;
-            case MultimeterMode.ACVoltage:
-                view.UpdateValues(0.01f);
-                break;
-            case MultimeterMode.Amperage:
-                view.UpdateValues(model.CalculateAmperage());
-                break;
-            case MultimeterMode.Resistance:
-                view.UpdateValues(model.Resistance);
-                break;
-            default:
-                view.TurnOffDisplay();
-                break;
-        }
 
-        mid.localRotation = Quaternion.Lerp(
-            mid.localRotation, 
-            Quaternion.Euler(((float)model.CurrentMode * scrollAngleStep) - 90, -90, 90), 
+
+        transform.localRotation = Quaternion.Lerp(
+            transform.localRotation, 
+            Quaternion.Euler(((float)MultimeterModel.CurrentMode * scrollAngleStep) - 90, -90, 90), 
             0.05f);
     }
 }

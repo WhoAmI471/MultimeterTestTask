@@ -3,11 +3,20 @@ using TMPro;
 
 public class MultimeterView : MonoBehaviour
 {
-    public TextMeshPro valueText;
-    public TextMeshProUGUI voltageModeText;
-    public TextMeshProUGUI aCVoltageModeText;
-    public TextMeshProUGUI amperageModeText;
-    public TextMeshProUGUI resistanceModeText;
+    [SerializeField]
+    private TextMeshPro valueText;
+
+    [SerializeField]
+    private TextMeshProUGUI voltageModeText;
+    
+    [SerializeField]
+    private TextMeshProUGUI aCVoltageModeText;
+    
+    [SerializeField]
+    private TextMeshProUGUI amperageModeText;
+
+    [SerializeField]
+    private TextMeshProUGUI resistanceModeText;
 
     public void UpdateMode(MultimeterMode mode)
     {

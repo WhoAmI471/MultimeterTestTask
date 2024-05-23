@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+
 public enum MultimeterMode
 {
     Off,
@@ -19,15 +20,15 @@ public class MultimeterModel : MonoBehaviour
 
     public void SwitchModeNext()
     {
-        CurrentMode = (MultimeterMode)(((int)CurrentMode + 1) % 5);
+        CurrentMode = (MultimeterMode)(((int)CurrentMode + 1) % Enum.GetNames(typeof(MultimeterMode)).Length);
     }
 
     public void SwitchModeBack()
     {
-        CurrentMode = (MultimeterMode)(((int)CurrentMode - 1) % 5);
+        CurrentMode = (MultimeterMode)(((int)CurrentMode - 1) % Enum.GetNames(typeof(MultimeterMode)).Length);
     }
 
-    internal void SetMode(int modeIndex = 0)
+    public void SetMode(int modeIndex = 0)
     {
         CurrentMode = (MultimeterMode)modeIndex;
     }

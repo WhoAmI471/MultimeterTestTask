@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &31909955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5305141737459243881, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
+  m_PrefabInstance: {fileID: 5305141736969861512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ef80dea8b131f4785283d82529cc5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &135499623
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +269,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135499623}
   m_CullTransparentMesh: 1
+--- !u!114 &161076656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5305141737487501055, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
+  m_PrefabInstance: {fileID: 5305141736969861512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f86117d664acf24dbafffa6aa905af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &204873154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,6 +1145,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Multimeter
       objectReference: {fileID: 0}
+    - target: {fileID: 5305141737050266006, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
+      propertyPath: power
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305141737050266006, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
+      propertyPath: MultimeterView
+      value: 
+      objectReference: {fileID: 161076656}
+    - target: {fileID: 5305141737050266006, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
+      propertyPath: MultimeterModel
+      value: 
+      objectReference: {fileID: 31909955}
     - target: {fileID: 5305141737487501055, guid: 876a963a017653349932a9bb7c9a8bec, type: 3}
       propertyPath: voltageModeText
       value: 
